@@ -1,0 +1,42 @@
+{
+	"manifest_version": 2,
+	"name": "Key to Click",
+	"description": "Assign Keys to Click for You",
+	"version": "0.0.1",
+	"web_accessible_resources": [
+    "popup.js"
+  ],
+	"icons": {
+		"64": "icons/icon.png"
+	},
+	"background": {
+		"scripts": [
+			"node_modules/webextension-polyfill/dist/browser-polyfill.js",
+			"background_script.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"node_modules/webextension-polyfill/dist/browser-polyfill.js",
+				"content_script.js"
+			],
+			"all_frames": true,
+			"run_at": "document_end"
+		}
+	],
+	"permissions": [
+		"tabs",
+		"storage"
+	],
+	"browser_action": {
+		"default_icon": {
+			"64": "icons/icon.png"
+		},
+		"default_popup": "browserAction/index.html",
+		"default_title": "Key to Click"
+	}
+}
