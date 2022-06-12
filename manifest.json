@@ -9,12 +9,6 @@
 	"icons": {
 		"64": "icons/icon.png"
 	},
-	"background": {
-		"scripts": [
-			"node_modules/webextension-polyfill/dist/browser-polyfill.js",
-			"background_script.js"
-		]
-	},
 	"content_scripts": [
 		{
 			"matches": [

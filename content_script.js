@@ -2,14 +2,12 @@
 console.log('key-to-click extension: this script loads on every page')
 
 async function getHostConfig(host = tabHost) {
-  console.log(`getting config for ${host}`)
   // https://github.com/mdn/webextensions-examples/blob/master/stored-credentials/storage.js
   const storedObj = await browser.storage.local.get();
   if (storedObj === null || typeof storedObj === 'undefined') {
     return {}
   }
   if (storedObj.hasOwnProperty(host)) {
-    console.log('hostConfig', storedObj[host])
     return storedObj[host];
   } else {
     return {}
@@ -19,7 +17,7 @@ async function getHostConfig(host = tabHost) {
 // Listen for messages from the background script (popup.js)
 browser.runtime.onMessage.addListener((message) => {
   if (message.command === 'send-data') {
-    console.log('received data from popup', message.data);
+    console.log('Received data from key-to-click popup', message.data);
   }
 });
 
@@ -27,32 +25,68 @@ async function getConfig() {
   return getHostConfig(window.location.host)
 }
 
-document.addEventListener('keyup', async e => {
+function findElement(selector) {
+  let element = document.querySelector(selector);
+
+  if (document.querySelectorAll(selector).length > 1) {
+    function isVisible(el) {
+      // TODO: perhaps add check for other visibility tactics
+      // - such as: aria-hidden="true", etc.
+      if (window.getComputedStyle(el, null).display === 'none') {
+        return false
+      }
+      if (el.parentElement) {
+        return isVisible(el.parentElement)
+      }
+      return true
+    }
+    const visibleElements = Array.from(document.querySelectorAll(selector)).filter(el => {
+      return isVisible(el)
+    })
+    if (visibleElements.length > 0) {
+      if (visibleElements.length > 1) {
+        console.log('More than one visible element found for selector:', selector);
+        console.log('\t- picking first element', visibleElements)
+      }
+      element = visibleElements[0]
+    } else if (element) {
+      console.log('No visible element found for selector:', selector, '\n\t- falling back to first element found', element);
+    }
+  }
+
+  return element
+}
+
+async function keyListener(e) {
+  // ignore keyboard events while typing in any of these elements
+  // TODO: allow config to override this
+  if (['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+    console.log('Ignoring key event because target element is an ignored type of', e.target.tagName)
+    return
+  }
+
   const currentConfig = await getConfig()
   if (currentConfig && Object.keys(currentConfig).length > 0) {
     console.log(e.key, 'pressed')
     let foundConfigKey = null
     Object.entries(currentConfig).forEach(([key, selector]) => {
       const { key: keyPressed } = e;
-      foundConfigKey = key
       if (keyPressed === key) {
-        const element = document.querySelector(selector);
+        foundConfigKey = key
+        const element = findElement(selector)
         if (element) {
-          if (document.querySelectorAll(selector).length > 1) {
-            console.log('More than one element found for selector:', selector);
-          }
           element.click()
-        }
-        else console.log(`selector '${selector}' found no element`);
+        } else console.log(`Selector '${selector}' found no element`);
       }
     });
     if (foundConfigKey) {
-      console.log('element for key:', currentConfig[e.key])
+      console.log('Element for key:', currentConfig[e.key])
       foundConfigKey = false
     } else {
-      console.log('no configured element for key:', e.key)
+      console.log('No configured element for key:', e.key)
     }
   } else {
-    console.log(`no key-to-click config found for '${window.location.host}'`)
+    console.log(`No key-to-click config found for '${window.location.host}'`)
   }
-});
+}
+document.addEventListener('keyup', keyListener);

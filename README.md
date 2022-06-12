@@ -14,3 +14,6 @@ https://extensionworkshop.com/documentation/develop/debugging/#debugging_popups
 `web-ext run --firefox=/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox --firefox-profile=Dev`  
 
 Outdated but slightly useful: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Firefox_workflow_overview
+
+## TODO
+- [ ] Advanced config - ability to not ignore certain keys while in input/textarea/select
