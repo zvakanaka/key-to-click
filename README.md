@@ -1,4 +1,4 @@
-# Key to Click Firefox Addon
+# Key to Click Firefox Addon (and Chrome Extension)
 Example config for [https://apod.nasa.gov](https://apod.nasa.gov):
 ```
 {
