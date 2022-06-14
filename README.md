@@ -15,5 +15,14 @@ https://extensionworkshop.com/documentation/develop/debugging/#debugging_popups
 
 Outdated but slightly useful: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Firefox_workflow_overview
 
+### [Icons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/icons)
+```sh
+convert ./icons/icon-fullsize.png -resize 48x48^ -background none -gravity center -extent 48x48 icons/icon.png
+convert ./icons/icon-fullsize.png -resize 96x96^ -background none -gravity center -extent 96x96 icons/icon@2x.png
+```
+
 ## TODO
 - [ ] Advanced config - ability to not ignore certain keys while in input/textarea/select
+
+## Sources
+Icon from https://openmoji.org/library/emoji-1F5B1/

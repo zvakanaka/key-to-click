@@ -59,9 +59,11 @@ function findElement(selector) {
 
 async function keyListener(e) {
   // ignore keyboard events while typing in any of these elements
+  // Enter (without shift) in a textarea overrides the input detection skip
+  const enterWithoutShiftPressed = e.key === 'Enter' && !e.shiftKey
   // TODO: allow config to override this
-  if (['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
-    console.log('Ignoring key event because target element is an ignored type of', e.target.tagName)
+  if (['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName) && !enterWithoutShiftPressed) {
+    console.log(`Ignoring key event because target element is an ignored type of '${e.target.tagName}' and 'Enter' key (without shift) is not pressed`)
     return
   }
 
@@ -76,6 +78,7 @@ async function keyListener(e) {
         const element = findElement(selector)
         if (element) {
           element.click()
+          e.preventDefault()
         } else console.log(`Selector '${selector}' found no element`);
       }
     });

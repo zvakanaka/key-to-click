@@ -1,4 +1,3 @@
-document.getElementById('myHeading').style.color = 'blue'
 const textarea = document.getElementById('config')
 
 let tabHost = null
@@ -9,12 +8,11 @@ const getInitialConfig = async (tabs) => {
   console.log(`hostConfig for ${tabHost}: ${JSON.stringify(hostConfig, null, 2)}`)
   
   textarea.value = JSON.stringify(hostConfig, null, 2)
+
+  const hostDisplay = document.getElementById('host')
+  hostDisplay.textContent = tabHost
 }
-try {
-  browser.tabs.query({ active: true, currentWindow: true }, getInitialConfig);
-} catch (error) {
-  browser.tabs.query({ active: true, currentWindow: true }).then(getInitialConfig);
-}
+browser.tabs.query({ active: true, currentWindow: true }).then(getInitialConfig);
 
 async function setData(value, cb = () => {}) {
   console.log(`setting data for ${tabHost}`)
@@ -59,11 +57,7 @@ const sendDataToTab = (queryTabs) => {
 }
 function tabToSendDataTo(_tabs, data) {
   // https://developer.chrome.com/extensions/tabs#method-query
-  try {
-    browser.tabs.query({}, sendDataToTab)
-  } catch (error) {
-    browser.tabs.query({}).then(sendDataToTab)
-  }
+  browser.tabs.query({}).then(sendDataToTab)
 }
 function reportError(err) {
   console.error(`Failed to send data to tab: ${err}`);
@@ -74,3 +68,16 @@ function sendData(data) {
     .then(tabs => tabToSendDataTo(tabs, data))
     .catch(reportError);
 }
+
+const globalConfigButton = document.getElementById('global-config')
+globalConfigButton.addEventListener('click', async () => {
+  function onOpened() {
+    console.log(`Options page opened`);
+  }
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+  browser.runtime.openOptionsPage()
+    .then(onOpened)
+    .catch(onError);
+})

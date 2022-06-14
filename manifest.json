@@ -1,13 +1,14 @@
 {
 	"manifest_version": 2,
 	"name": "Key to Click",
-	"description": "Assign Keys to Click for You",
+	"description": "Assign keys to click for you",
 	"version": "0.0.1",
 	"web_accessible_resources": [
-    "popup.js"
-  ],
+		"popup.js"
+	],
 	"icons": {
-		"64": "icons/icon.png"
+		"48": "icon.png",
+		"96": "icon@2x.png"
 	},
 	"content_scripts": [
 		{
@@ -28,9 +29,14 @@
 	],
 	"browser_action": {
 		"default_icon": {
-			"64": "icons/icon.png"
+			"96": "icon@2x.png"
 		},
 		"default_popup": "browserAction/index.html",
 		"default_title": "Key to Click"
+	},
+	"options_ui": {
+		"page": "options.html",
+		"browser_style": true,
+		"chrome_style": true
 	}
 }

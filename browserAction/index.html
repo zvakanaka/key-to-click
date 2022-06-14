@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <link href="style.css" rel="stylesheet" />
   </head>
+  <style>
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+    }
+    #host {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .pt-16 {
+      padding-top: 16px;
+    }
+  </style>
   <body>
-    <h1 id="myHeading">Key to Click Config</h1>
+    <h1>Key to Click</h1>
+    <div>
+      <span id="host"></span>
+    </div>
     <textarea id="config" cols="30" rows="10"></textarea>
+    <div class="pt-16">
+      <button id="global-config">Open Global Options</button>
+    </div>
     <script src="/node_modules/webextension-polyfill/dist/browser-polyfill.js"></script>
     <script src="script.js"></script>
   </body>
