@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "v2": "cp v2_manifest.json manifest.json",
     "v3": "cp v3_manifest.json manifest.json",
-    "zip": "zip key-to-click-$(node -e \"const m=require('./manifest.json');process.stdout.write(m.version+'-manifest-v'+m.manifest_version.toString())\").zip -r * -x .git screenshots/ screenshots/* v2_manifest.json v3_manifest.json .gitignore .DS_Store .npmrc *.zip @"
+    "zip": "zip key-to-click-$(node -e \"const m=require('./manifest.json');process.stdout.write(m.version+'-manifest-v'+m.manifest_version.toString())\").zip -r * -x .git screenshots/ screenshots/* v2_manifest.json v3_manifest.json .gitignore .DS_Store .npmrc icons/icon-original-618.png *.zip @"
   },
   "author": "Adam Quinton",
   "devDependencies": {

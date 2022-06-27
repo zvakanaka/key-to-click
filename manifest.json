@@ -7,8 +7,8 @@
     "popup.js"
   ],
   "icons": {
-    "48": "icon.png",
-    "96": "icon@2x.png"
+    "48": "icons/icon.png",
+    "96": "icons/icon@2x.png"
   },
   "content_scripts": [
     {
@@ -29,7 +29,7 @@
   ],
   "browser_action": {
     "default_icon": {
-      "96": "icon@2x.png"
+      "96": "icons/icon@2x.png"
     },
     "default_popup": "browserAction/index.html",
     "default_title": "Key to Click"
