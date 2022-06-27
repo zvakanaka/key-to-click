@@ -15,6 +15,16 @@ https://extensionworkshop.com/documentation/develop/debugging/#debugging_popups
 
 Outdated but slightly useful: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Firefox_workflow_overview
 
+### Build
+Create a zip file with the correct manifest.json:
+
+Firefox: 
+`npm run build:v2`  
+Chrome: 
+`npm run build:v3`  
+
+Check the contents of the zip with: `unzip -l key-to-click.zip`
+
 ### [Icons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/icons)
 ```sh
 convert ./icons/icon-fullsize.png -resize 48x48^ -background none -gravity center -extent 48x48 icons/icon.png

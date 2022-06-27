@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
+    "build:v2": "npm run v2 && npm run zip",
+    "build:v3": "npm run v3 && npm run zip",
     "postinstall": "cp ./node_modules/webextension-polyfill/dist/browser-polyfill.min.js ./vendor/browser-polyfill.min.js ; rm -rf ./node_modules",
     "test": "echo \"Error: no test specified\" && exit 1",
     "v2": "cp v2_manifest.json manifest.json",
-    "v3": "cp v3_manifest.json manifest.json"
+    "v3": "cp v3_manifest.json manifest.json",
+    "zip": "zip key-to-click-$(node -e \"const m=require('./manifest.json');process.stdout.write(m.version+'-manifest-v'+m.manifest_version.toString())\").zip -r * -x .git screenshots/ screenshots/* v2_manifest.json v3_manifest.json .gitignore .DS_Store .npmrc *.zip @"
   },
   "author": "Adam Quinton",
   "devDependencies": {
